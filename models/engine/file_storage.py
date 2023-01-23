@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-contains the FileStorage class
+Contains the FileStorage class
 """
 
 import json
@@ -56,11 +56,11 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except BaseException:
+        except Exception:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if it's inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -71,7 +71,10 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """method to retrieve on object"""
+        """
+        Returns the object based on the class name and its ID, or
+        None if not found
+        """
         if cls not in classes.values():
             return None
 
@@ -81,8 +84,11 @@ class FileStorage:
                 return value
 
         return None
+
     def count(self, cls=None):
-        """Returns the number of objects in storage matching the given class"""
+        """
+        count the number of objects in storage
+        """
         all_class = classes.values()
 
         if not cls:
